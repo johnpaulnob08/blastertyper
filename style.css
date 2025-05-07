@@ -1,0 +1,253 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow: hidden;
+}
+
+img.hovering {
+  animation: hover 5s infinite ease-in-out;
+  position: absolute;
+}
+
+@keyframes hover {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+/* INDEX PAGE */
+#index .game-name {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  margin-top: 100px;
+}
+
+#index .game-name img {
+  display: inline-block;
+}
+
+#index .game-name .ufo {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+}
+
+#index .rocket1 {
+  top: 50px;
+  right: 140px;
+  width: 60px;
+}
+
+#index .rocket2 {
+  bottom: 100px;
+  left: 80px;
+  width: 50px;
+}
+
+#index .spaceman {
+  bottom: 20px;
+  left: 30px;
+  width: 80px;
+}
+
+#index .play-button {
+  display: block;
+  margin: 40px auto;
+  cursor: pointer;
+  width: 150px;
+}
+
+/* LOGIN / REGISTER PAGE */
+.login-register .game-name {
+  display: block;
+  margin: 50px auto 20px;
+}
+
+.login-register .form-box {
+  width: 400px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.login-register .form-box input {
+  width: 80%;
+  padding: 10px;
+  margin: 10px auto;
+  display: block;
+  border: none;
+  border-radius: 5px;
+}
+
+.login-register .form-box img {
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.login-register .signup-button,
+.login-register .sign-button2 {
+  display: block;
+  margin: 20px auto;
+  cursor: pointer;
+  width: 160px;
+}
+
+/* HOME PAGE */
+#home .game-name {
+  display: block;
+  margin: 30px auto;
+}
+
+#home .white-rocket {
+  position: absolute;
+  top: 100px;
+  right: 150px;
+  width: 60px;
+}
+
+#home .saturn {
+  position: absolute;
+  top: 150px;
+  left: 100px;
+  width: 100px;
+}
+
+#home .panel-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 60px;
+  padding: 0 50px;
+}
+
+.panel {
+  width: 45%;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+}
+
+.difficulty-btns button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.difficulty-btns button:hover,
+.difficulty-btns .active {
+  background: #00aaff;
+}
+
+#blast-button {
+  margin-top: 20px;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* GAME PAGE */
+#game .game-name {
+  display: block;
+  margin: 20px auto;
+}
+
+#game .game-box {
+  width: 90%;
+  height: 500px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.1);
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+#game .rocket-game {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 70px;
+}
+
+#game .word {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  color: white;
+  font-size: 24px;
+}
+
+#game .ball {
+  position: absolute;
+  width: 20px;
+}
+
+#game .input-box {
+  display: block;
+  width: 80%;
+  margin: 20px auto;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+#game .controls {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+#game .controls button {
+  margin: 5px;
+  padding: 8px 15px;
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+body {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    overflow: hidden;
+  }
+  
+  /* Page-specific backgrounds */
+  #index {
+    background-image: url('Page1.jpg');
+  }
+  
+  #login-register {
+    background-image: url('login_page.jpg');
+  }
+  
+  #home {
+    background-image: url('home_page.jpg');
+  }
+  
+  #game {
+    background-image: url('game_page.jpg');
+  }
+  

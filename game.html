@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game - Blaster Typer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body id="game">
+  <div class="background"></div>
+
+  <img src="game_name3.png" class="game-title">
+
+  <div class="game-box">
+    <canvas id="gameCanvas"></canvas>
+    <img src="rocket_game.png" class="rocket">
+    <div class="controls">
+      <button id="pause">Pause</button>
+      <button id="quit" onclick="location.href='homepage.html'">Quit</button>
+      <button id="resume">Resume</button>
+    </div>
+  </div>
+
+  <input type="text" id="wordInput" placeholder="Type here">
+  <script src="script.js"></script>
+</body>
+</html>
