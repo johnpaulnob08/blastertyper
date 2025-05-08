@@ -10,7 +10,6 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  overflow: hidden;
 }
 
 img.hovering {
@@ -25,215 +24,334 @@ img.hovering {
 }
 
 /* INDEX PAGE */
-#index .game-name {
+#index .game-title {
+  display: block;
   position: relative;
+  top: 90px; /* adjust as needed */
+  margin: 0 auto;
   width: 100%;
-  text-align: center;
-  margin-top: 100px;
+  max-width: 775px;
+  height: auto;
 }
 
-#index .game-name img {
-  display: inline-block;
-}
 
-#index .game-name .ufo {
+
+#index .ufo {
   position: absolute;
-  top: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 70px;
+  top: 50px;
+  left: 32%;
+  transform: translateX(-0%);
+  width: 125px;
 }
 
 #index .rocket1 {
-  top: 50px;
-  right: 140px;
-  width: 60px;
+  position: absolute;
+  top: 28px;
+  left: 78%;
+  transform: translateX(-0%);
+  width: 175px;
 }
 
 #index .rocket2 {
-  bottom: 100px;
-  left: 80px;
-  width: 50px;
+  position: absolute;
+  top: 170px;
+  left: 9%;
+  transform: translateX(-0%);
+  width: 200px;
 }
 
 #index .spaceman {
-  bottom: 20px;
-  left: 30px;
-  width: 80px;
+  position: absolute;
+  top: 350px;
+  left: 78%;
+  transform: translateX(-0%);
+  width: 200px;
 }
 
 #index .play-button {
   display: block;
-  margin: 40px auto;
+  position: relative;
+  top: 150px; /* adjust to move it lower */
+  margin: 12px auto;
   cursor: pointer;
-  width: 150px;
+  width: 175px;
 }
 
 /* LOGIN / REGISTER PAGE */
+#login-register {
+  min-height: 100vh;
+  background: linear-gradient(#1a1a2e, #16213e);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+}
+
 .login-register .game-name {
   display: block;
   margin: 50px auto 20px;
 }
 
-.login-register .form-box {
-  width: 400px;
+#login-register .game-title {
+  display: block;
+  position: relative;
+  top: -20px; /* adjust as needed */
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0.2);
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+}
+
+#login-register .form-box {
+  width: 400px;
+  height: 270px;
+  margin-top: -50px;
+  background: rgba(118, 8, 186, 0.1); /* translucent white */
   padding: 30px;
-  border-radius: 15px;
+  border-radius: 20px;
   text-align: center;
+  backdrop-filter: blur(10px); /* glass effect */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* subtle glow */
 }
 
-.login-register .form-box input {
+#login-register .form-box input {
   width: 80%;
-  padding: 10px;
-  margin: 10px auto;
+  padding: 12px 20px;
+  margin: 20px auto 20px;
   display: block;
+  font-size: 16px;
   border: none;
-  border-radius: 5px;
+  border-radius: 30px;
+  background-color: #ffffff;
+  color: #000;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-.login-register .form-box img {
-  margin-top: 20px;
-  cursor: pointer;
-}
-
-.login-register .signup-button,
-.login-register .sign-button2 {
-  display: block;
-  margin: 20px auto;
+#login-register .form-box .login-button {
   cursor: pointer;
   width: 160px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+}
+
+#login-register .signup-button {
+  display: block;
+  margin: 30px auto 0;
+  width: 160px; /* adjust width as needed */
+  height: auto;
+  cursor: pointer;
 }
 
 /* HOME PAGE */
-#home .game-name {
+
+#home .title-img {
   display: block;
-  margin: 30px auto;
+  position: relative;
+  top: -10px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 900px;
+  height: auto;
 }
 
 #home .white-rocket {
   position: absolute;
-  top: 100px;
-  right: 150px;
-  width: 60px;
+  top: 20px;
+  right: 80px;
+  width: 125px;
 }
 
 #home .saturn {
   position: absolute;
-  top: 150px;
-  left: 100px;
-  width: 100px;
+  top: 20px;
+  left: 25px;
+  width: 300px;
+  opacity: 0.5; 
+  z-index: -1;
 }
 
-#home .panel-container {
+.panel-container {
   display: flex;
   justify-content: space-around;
-  margin-top: 60px;
+  margin-top: 25px;
   padding: 0 50px;
 }
 
 .panel {
-  width: 45%;
-  background: rgba(255, 255, 255, 0.15);
+  width: 35%;
+  background: rgba(88, 5, 213, 0.1);
   padding: 20px;
+  border-radius: 30px;
+  box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  font-family: "Lucida Console", Monaco, monospace;
+}
+
+.recent-placeholder {
+  height: 350px;
+  border: 2px dashed rgb(247, 240, 240);
   border-radius: 10px;
-  color: white;
+  margin-top: 20px;
 }
 
 .difficulty-btns button {
   display: block;
   width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  background: #444;
+  margin: 15px 0 5px;
+  padding: 15px;
+  background: rgba(180, 180, 180, 0.1);
   color: white;
-  border: none;
-  border-radius: 5px;
+  border: 2px solid rgba(180, 180, 180, 0.5);
+  border-radius: 8px;
   cursor: pointer;
+  box-shadow: 0 0 10px #333;
+  transition: background 0.3s, transform 0.2s;
+  font-family: "Lucida Console", Monaco, monospace;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.difficulty-btns button .description {
+  display: block;
+  font-size: 0.85rem;
+  margin-top: 5px;
+  color: #ccc;
 }
 
 .difficulty-btns button:hover,
-.difficulty-btns .active {
-  background: #00aaff;
+.difficulty-btns button.active {
+  background: rgba(204, 0, 0, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #cc0000;
+  border-color: #cc0000;
 }
 
-#blast-button {
-  margin-top: 20px;
-  width: 100%;
+.blast-button {
+  display: block;
+  margin: 30px auto 0;
+  width: 350px;
   cursor: pointer;
 }
 
-/* GAME PAGE */
-#game .game-name {
-  display: block;
-  margin: 20px auto;
-}
 
+/* GAME PAGE */
 #game .game-box {
   width: 90%;
-  height: 500px;
-  margin: 0 auto;
-  background: rgba(255,255,255,0.1);
+  height: 400px;
+  margin: 20px auto;
+  background: rgba(130, 120, 120, 0.525);
   position: relative;
-  border-radius: 15px;
+  border-radius: 10px;
   overflow: hidden;
+  border: 2px solid white;
 }
 
-#game .rocket-game {
+#game canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#game .vertical-line {
   position: absolute;
-  right: 10px;
+  right: 70px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: white;
+  opacity: 0.5;
+  z-index: 2;
+}
+
+#game .rocket {
+  position: absolute;
+  right: 17px;
   top: 50%;
   transform: translateY(-50%);
-  width: 70px;
-}
-
-#game .word {
-  position: absolute;
-  top: 100px;
-  left: 0;
-  color: white;
-  font-size: 24px;
-}
-
-#game .ball {
-  position: absolute;
-  width: 20px;
-}
-
-#game .input-box {
-  display: block;
-  width: 80%;
-  margin: 20px auto;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
+  width: 100px;
+  z-index: 3;
+  transition: top 0.1s ease;
 }
 
 #game .controls {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 #game .controls button {
-  margin: 5px;
-  padding: 8px 15px;
-  background: #222;
+  background-color: #6a0dad;
   color: white;
   border: none;
-  border-radius: 5px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
   cursor: pointer;
 }
 
-body {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    overflow: hidden;
-  }
-  
+.game-title {
+  display: block;
+  margin: -35px auto 0 auto;
+  text-align: center;
+  width: auto;
+  max-width: 75%;
+}
+
+#wordInput {
+  display: block;
+  margin: 10px auto;
+  width: 60%;
+  padding: 12px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background: rgba(74, 53, 98, 0.783);
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  outline: none;
+  font-family: "Courier New", "Lucida Console", monospace;
+}
+
+/* Modal styling */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-content {
+  background: #1f1f3b;
+  padding: 30px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.modal-content button {
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: #6a0dad;
+  color: white;
+  cursor: pointer;
+}
+
   /* Page-specific backgrounds */
   #index {
     background-image: url('Page1.jpg');

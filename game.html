@@ -7,20 +7,29 @@
 </head>
 <body id="game">
   <div class="background"></div>
-
   <img src="game_name3.png" class="game-title">
 
   <div class="game-box">
     <canvas id="gameCanvas"></canvas>
-    <img src="rocket_game.png" class="rocket">
-    <div class="controls">
-      <button id="pause">Pause</button>
-      <button id="quit" onclick="location.href='homepage.html'">Quit</button>
-      <button id="resume">Resume</button>
-    </div>
+    <div class="vertical-line"></div>
+    <img src="rocket_game.png" class="rocket" id="rocket">
   </div>
 
   <input type="text" id="wordInput" placeholder="Type here">
+
+  <div class="controls">
+    <button id="pause">Pause</button>
+    <button id="quit" onclick="location.href='homepage.html'">Quit</button>
+  </div>
+
+  <div class="modal" id="pauseModal">
+    <div class="modal-content">
+      <button id="resume">Resume</button>
+      <button id="restart">Restart</button>
+      <button onclick="location.href='homepage.html'">Quit</button>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
