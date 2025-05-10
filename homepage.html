@@ -14,8 +14,7 @@
   <div class="panel-container">
     <div class="panel left-panel">
       <h2>Recent Games</h2>
-      <div class="recent-placeholder">
-      </div>
+      <div class="recent-placeholder"></div>
     </div>
 
     <div class="panel right-panel">
@@ -25,22 +24,33 @@
           EASY<br>
           <span class="description">A relaxing no-pressure pace.</span>
         </button>
-        
         <button class="mode" data-mode="medium">
           MEDIUM<br>
           <span class="description">A moderate challenge for most players.</span>
         </button>
-        
         <button class="mode" data-mode="hard">
           HARD<br>
           <span class="description">A true test of your typing skills!</span>
-        </button>        
+        </button>
       </div>
 
+      <input type="text" id="playerName" placeholder="Enter your name">
       <a href="game.html">
         <img src="blast_button.png" class="blast-button">
       </a>
     </div>
   </div>
+
+  <!-- Settings Button -->
+  <div class="settings-container">
+    <img src="settings.png" class="settings-btn" id="settingsBtn">
+    <div class="settings-popup hidden">
+      <img src="sound_on.png" class="popup-btn" id="soundToggle">
+      <img src="music.png" class="popup-btn" id="musicToggle">
+      <img src="exit.png" class="popup-btn" id="exitBtn">
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

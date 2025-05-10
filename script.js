@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const bodyId = document.body.id;
 
   if (bodyId === "index") {
-    // Animate game title zoom in
     const gameTitle = document.querySelector(".game-title");
     gameTitle.style.transform = "scale(0.5)";
     gameTitle.style.transition = "transform 1.5s ease-out";
@@ -13,14 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });    
 
-    // Hover animation for floating elements
     ["ufo", "rocket1", "rocket2", "spaceman"].forEach(className => {
       const el = document.querySelector(`.${className}`);
       if (el) el.classList.add("hovering");
     });
 
   } else if (bodyId === "login-register") {
-    // Save register form data and redirect
     const signupBtn = document.querySelector(".signup-button");
     if (signupBtn && window.location.href.includes("register.html")) {
       signupBtn.addEventListener("click", () => {
@@ -31,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Redirect to homepage if credentials match
     const loginBtn = document.querySelector(".login-button");
     if (loginBtn && window.location.href.includes("login_page.html")) {
       loginBtn.addEventListener("click", (e) => {
@@ -42,17 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (inputUser !== storedUser || inputPass !== storedPass) {
           alert("Incorrect username or password");
-          e.preventDefault(); // cancel link navigation
+          e.preventDefault(); 
         }
       });
     }
 
   } else if (bodyId === "home") {
-    // Hover white rocket
     const whiteRocket = document.querySelector(".white-rocket");
     if (whiteRocket) whiteRocket.classList.add("hovering");
 
-    // Difficulty buttons highlight and remember selection
     const modeButtons = document.querySelectorAll(".mode");
     const savedDifficulty = localStorage.getItem("selectedDifficulty");
 
@@ -72,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Load and display dummy game data
     const recent = document.querySelector(".recent-placeholder");
     const dummyData = [
       { username: "Player1", score: 25 },
@@ -102,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
     current.style.color = "lightblue";
     recent.appendChild(current);
 
-    // Blast button hover and redirect
     const blastBtn = document.querySelector(".blast-button");
     blastBtn.classList.add("hovering");
   }
@@ -112,47 +104,88 @@ document.addEventListener("DOMContentLoaded", () => {
     const ctx = canvas.getContext("2d");
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
-  
+
     const wordInput = document.getElementById("wordInput");
     const rocket = document.getElementById("rocket");
     const pauseBtn = document.getElementById("pause");
     const pauseModal = document.getElementById("pauseModal");
     const resumeBtn = document.getElementById("resume");
     const restartBtn = document.getElementById("restart");
-  
-    let words = ["space", "blast", "rocket", "type", "alien", "orbit"];
+
+    const allWords = ["space", "blast", "rocket", "type", "alien", "orbit", "laser", "comet", "nova", "meteor", "galaxy", "asteroid", "ship", "planet", "blackhole"];
     let activeWords = [];
+    let usedWords = [];
     let bullets = [];
     let interval;
     let score = 0;
-  
+
+    let powerUpActive = null;
+    let powerUpTimer = null;
+    const powerUpIndicator = document.getElementById("power-up-indicator");
+
+    // Power-up word spawn
     function spawnWord() {
-      const word = words[Math.floor(Math.random() * words.length)];
+      const availableWords = allWords.filter(word => !usedWords.includes(word));
+      if (availableWords.length === 0) usedWords = [];
+
+      const word = availableWords[Math.floor(Math.random() * availableWords.length)];
+      usedWords.push(word);
+      if (usedWords.length > 15) usedWords.shift();
       const y = Math.random() * (canvas.height - 40) + 20;
-      const speed = Math.random() * 1.5 + 0.5;
+      const speed = Math.random() * 1.2 + 1.2;
       const color = ["#FFD700", "#00FFFF", "#FF69B4", "#ADFF2F", "#FF4500"][Math.floor(Math.random() * 5)];
-      activeWords.push({ text: word, x: 0, y, speed, color });
+      const isPowerUp = Math.random() < 0.12;
+      const type = isPowerUp ? ["slow", "clear", "freeze", "double"][Math.floor(Math.random() * 4)] : null;
+
+      activeWords.push({ text: word, x: 0, y, speed, color, isPowerUp, type });
     }
-  
+
+    // Activate power-up
+    function activatePowerUp(type) {
+      clearTimeout(powerUpTimer);
+      powerUpActive = type;
+      powerUpIndicator.textContent = `POWER-UP: ${type.toUpperCase()}`;
+      powerUpIndicator.classList.add("active");
+
+      switch (type) {
+        case "slow":
+          speed /= 2;
+          break;
+        case "clear":
+          activeWords = [];
+          break;
+        case "freeze":
+          break;
+        case "double":
+          break;
+      }
+
+      powerUpTimer = setTimeout(() => deactivatePowerUp(), 5000);
+    }
+
+    function deactivatePowerUp() {
+      powerUpActive = null;
+      powerUpIndicator.textContent = "";
+      powerUpIndicator.classList.remove("active");
+    }
+
+    // Draw words and handle bullet interaction
     function drawWordsAndBullets() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-      // Draw and move words
+
       ctx.font = "bold 22px 'Courier New', monospace";
       activeWords.forEach(word => {
         ctx.fillStyle = word.color;
         ctx.fillText(word.text, word.x, word.y);
         word.x += word.speed;
       });
-  
-      // Draw and move bullets
+
       bullets.forEach((bullet, i) => {
         const img = new Image();
         img.src = "balls.png";
         ctx.drawImage(img, bullet.x, bullet.y - 10, 20, 20);
-        bullet.x -= 5;
-  
-        // Collision detection
+        bullet.x -= 15;
+
         activeWords.forEach((word, j) => {
           const wordWidth = ctx.measureText(word.text).width;
           if (
@@ -161,17 +194,15 @@ document.addEventListener("DOMContentLoaded", () => {
             bullet.y > word.y - 20 &&
             bullet.y < word.y + 10
           ) {
-            activeWords.splice(j, 1); // remove word
-            bullets.splice(i, 1);     // remove bullet
+            activeWords.splice(j, 1);
+            bullets.splice(i, 1);
             score++;
           }
         });
       });
-  
-      // Remove offscreen bullets
+
       bullets = bullets.filter(b => b.x > 0);
-  
-      // Check game over (word reaches rocket)
+
       activeWords.forEach(word => {
         if (word.x > canvas.width - 100) {
           clearInterval(interval);
@@ -179,14 +210,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     }
-  
+
+    // Start game loop
     function startGame() {
       interval = setInterval(() => {
         drawWordsAndBullets();
-        if (Math.random() < 0.02) spawnWord();
+        if (Math.random() < 0.025) spawnWord();
       }, 30);
     }
-  
+
     wordInput.addEventListener("input", () => {
       const input = wordInput.value.trim();
       const index = activeWords.findIndex(word => word.text === input);
@@ -197,51 +229,53 @@ document.addEventListener("DOMContentLoaded", () => {
         wordInput.value = "";
       }
     });
-  
+
     function shootBall(y) {
-      bullets.push({ x: canvas.width - 100, y }); // Start from rocket's position
+      bullets.push({ x: canvas.width - 100, y });
     }
-  
+
+    // Handle Game Over
     function showGameOver() {
       const modal = document.createElement("div");
       modal.classList.add("modal");
       modal.style.display = "flex";
-  
+
       const box = document.createElement("div");
       box.classList.add("modal-content");
-  
+
       const msg = document.createElement("p");
       msg.textContent = "Game Over!";
       msg.style.color = "white";
       msg.style.fontSize = "20px";
       msg.style.textAlign = "center";
-  
+
       const playAgainBtn = document.createElement("button");
       playAgainBtn.textContent = "Play Again";
       playAgainBtn.onclick = () => window.location.reload();
-  
+
       const menuBtn = document.createElement("button");
       menuBtn.textContent = "Menu";
       menuBtn.onclick = () => location.href = "homepage.html";
-  
+
       box.append(msg, playAgainBtn, menuBtn);
       modal.appendChild(box);
       document.body.appendChild(modal);
     }
-  
+
     pauseBtn.addEventListener("click", () => {
       pauseModal.style.display = "flex";
       clearInterval(interval);
     });
-  
+
     resumeBtn.addEventListener("click", () => {
       pauseModal.style.display = "none";
       startGame();
     });
-  
+
     restartBtn.addEventListener("click", () => {
       location.reload();
     });
-  
+
     startGame();
-  }});  
+  }
+});

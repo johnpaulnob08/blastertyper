@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body id="game">
+  <div id="power-up-indicator"></div>
   <div class="background"></div>
   <img src="game_name3.png" class="game-title">
 
@@ -22,13 +23,24 @@
     <button id="quit" onclick="location.href='homepage.html'">Quit</button>
   </div>
 
+  <!-- Pause Modal -->
   <div class="modal" id="pauseModal">
     <div class="modal-content">
       <button id="resume">Resume</button>
       <button id="restart">Restart</button>
+      <button id="Settings">Settings</button>
       <button onclick="location.href='homepage.html'">Quit</button>
     </div>
   </div>
+
+  <!-- Settings Modal -->
+  <div class="modal" id="settingsModal">
+  <div class="modal-content">
+    <button id="toggleSound">Sound: On</button>
+    <button id="toggleMusic">Music: On</button>
+    <button onclick="document.getElementById('settingsModal').style.display='none'">Close</button>
+  </div>
+</div>
 
   <script src="script.js"></script>
 </body>

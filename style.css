@@ -233,10 +233,70 @@ img.hovering {
 
 .blast-button {
   display: block;
-  margin: 30px auto 0;
+  margin: -10px auto 0;
   width: 350px;
   cursor: pointer;
 }
+
+#playerName {
+  display: block;
+  margin: 20px auto 10px;
+  padding: 12px 15px;
+  width: 90%;
+  max-width: 300px;
+  border-radius: 12px;
+  border: 2px solid #8800cc;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 1rem;
+  text-align: center;
+  font-family: "Lucida Console", Monaco, monospace;
+  box-shadow: 0 0 10px rgba(136, 0, 204, 0.5);
+  transition: all 0.3s ease;
+}
+
+#playerName::placeholder {
+  color: #ccc;
+}
+
+#playerName:focus {
+  outline: none;
+  border-color: #ff00ff;
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+
+.settings-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.settings-btn {
+  width: 60px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.settings-popup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.popup-btn {
+  width: 50px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: filter 0.3s;
+}
+
+.settings-popup.hidden {
+  display: none;
+}
+
 
 
 /* GAME PAGE */
@@ -303,6 +363,7 @@ img.hovering {
   max-width: 75%;
 }
 
+/* input field appearance */
 #wordInput {
   display: block;
   margin: 10px auto;
@@ -310,28 +371,30 @@ img.hovering {
   padding: 12px;
   border: 2px solid #ccc;
   border-radius: 10px;
-  background: rgba(74, 53, 98, 0.783);
-  color: white;
-  font-size: 18px;
+  background: rgba(74, 53, 98, 0.9);
+  color: #fff;
+  font-size: 20px;
   text-align: center;
   outline: none;
-  font-family: "Courier New", "Lucida Console", monospace;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  transition: border-color 0.3s;
+}
+#wordInput:focus {
+  border-color: #6a0dad;
 }
 
-/* Modal styling */
+/* reuse modal and modal-content styles for settings */
 .modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   display: none;
   justify-content: center;
   align-items: center;
   z-index: 10;
 }
-
 .modal-content {
   background: #1f1f3b;
   padding: 30px;
@@ -341,7 +404,6 @@ img.hovering {
   gap: 15px;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
-
 .modal-content button {
   padding: 12px;
   font-size: 16px;
@@ -351,6 +413,42 @@ img.hovering {
   color: white;
   cursor: pointer;
 }
+
+/* Glowing Power-Up Styles */
+.word.powerup {
+  font-weight: bold;
+  text-shadow: 0 0 8px white;
+  animation: glow 1s infinite alternate;
+}
+
+.word.slow { color: #00f; }
+.word.clear { color: #f00; }
+.word.freeze { color: #0f0; }
+.word.double { color: #a0f; }
+
+@keyframes glow {
+  from { text-shadow: 0 0 5px white; }
+  to { text-shadow: 0 0 15px white; }
+}
+
+/* Power-Up Indicator */
+#power-up-indicator {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  font-weight: bold;
+  color: yellow;
+  text-shadow: 0 0 8px #fff;
+  display: none;
+}
+
+#power-up-indicator.active {
+  display: block;
+}
+
+
 
   /* Page-specific backgrounds */
   #index {
@@ -368,4 +466,5 @@ img.hovering {
   #game {
     background-image: url('game_page.jpg');
   }
+
   
