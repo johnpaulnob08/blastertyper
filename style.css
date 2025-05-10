@@ -192,6 +192,11 @@ img.hovering {
   font-family: "Lucida Console", Monaco, monospace;
 }
 
+.panel h2 {
+  color: #f0eaff; /* lighter color for better visibility */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
 .recent-placeholder {
   height: 350px;
   border: 2px dashed rgb(247, 240, 240);
@@ -236,6 +241,7 @@ img.hovering {
   margin: -10px auto 0;
   width: 350px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 #playerName {
@@ -265,7 +271,6 @@ img.hovering {
   box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
   background-color: rgba(255, 255, 255, 0.15);
 }
-
 
 .settings-container {
   position: fixed;
@@ -297,9 +302,13 @@ img.hovering {
   display: none;
 }
 
+.grayscale {
+  filter: grayscale(100%);
+}
 
 
 /* GAME PAGE */
+
 #game .game-box {
   width: 90%;
   height: 400px;
@@ -380,6 +389,7 @@ img.hovering {
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
   transition: border-color 0.3s;
 }
+
 #wordInput:focus {
   border-color: #6a0dad;
 }
@@ -395,6 +405,7 @@ img.hovering {
   align-items: center;
   z-index: 10;
 }
+
 .modal-content {
   background: #1f1f3b;
   padding: 30px;
@@ -404,6 +415,7 @@ img.hovering {
   gap: 15px;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
+
 .modal-content button {
   padding: 12px;
   font-size: 16px;
@@ -448,8 +460,6 @@ img.hovering {
   display: block;
 }
 
-
-
   /* Page-specific backgrounds */
   #index {
     background-image: url('Page1.jpg');
@@ -467,4 +477,5 @@ img.hovering {
     background-image: url('game_page.jpg');
   }
 
+  
   

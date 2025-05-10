@@ -5,12 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const gameTitle = document.querySelector(".game-title");
     gameTitle.style.transform = "scale(0.5)";
     gameTitle.style.transition = "transform 1.5s ease-out";
-    
+
     window.addEventListener("load", () => {
       requestAnimationFrame(() => {
         gameTitle.style.transform = "scale(1)";
       });
-    });    
+    });
 
     ["ufo", "rocket1", "rocket2", "spaceman"].forEach(className => {
       const el = document.querySelector(`.${className}`);
@@ -38,68 +38,88 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (inputUser !== storedUser || inputPass !== storedPass) {
           alert("Incorrect username or password");
-          e.preventDefault(); 
+          e.preventDefault();
         }
       });
     }
 
   } else if (bodyId === "home") {
-    const whiteRocket = document.querySelector(".white-rocket");
-    if (whiteRocket) whiteRocket.classList.add("hovering");
+  const whiteRocket = document.querySelector(".white-rocket");
+  if (whiteRocket) whiteRocket.classList.add("hovering");
 
-    const modeButtons = document.querySelectorAll(".mode");
-    const savedDifficulty = localStorage.getItem("selectedDifficulty");
+  const modeButtons = document.querySelectorAll(".mode");
+  const savedDifficulty = localStorage.getItem("gameDifficulty");
 
-    if (savedDifficulty) {
-      modeButtons.forEach(btn => {
-        if (btn.dataset.mode === savedDifficulty) {
-          btn.classList.add("active");
-        }
-      });
-    }
-
+  if (savedDifficulty) {
     modeButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        modeButtons.forEach(b => b.classList.remove("active"));
+      if (btn.dataset.mode === savedDifficulty) {
         btn.classList.add("active");
-        localStorage.setItem("selectedDifficulty", btn.dataset.mode);
-      });
+      }
     });
+  }
 
-    const recent = document.querySelector(".recent-placeholder");
-    const dummyData = [
-      { username: "Player1", score: 25 },
-      { username: "Player2", score: 40 },
-      { username: "Player3", score: 15 },
-      { username: localStorage.getItem("registeredUser"), score: 20 }
-    ];
-
-    dummyData.sort((a, b) => b.score - a.score);
-
-    const top3 = dummyData.slice(0, 3);
-    const currentPlayer = dummyData.find(player => player.username === localStorage.getItem("registeredUser"));
-
-    top3.forEach(player => {
-      const el = document.createElement("p");
-      el.textContent = `${player.username}: ${player.score}`;
-      el.style.fontWeight = "bold";
-      recent.appendChild(el);
+  modeButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      modeButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      localStorage.setItem("gameDifficulty", btn.dataset.mode);
     });
+  });
 
-    const spacer = document.createElement("div");
-    spacer.style.height = "20px";
-    recent.appendChild(spacer);
+  const startGameLink = document.getElementById("startGameLink");
+  if (startGameLink) {
+    startGameLink.addEventListener("click", () => {
+      const nameInput = document.getElementById("playerName");
+      if (nameInput && nameInput.value.trim() !== "") {
+        localStorage.setItem("playerName", nameInput.value.trim());
+      }
+    });
+  }
 
-    const current = document.createElement("p");
-    current.textContent = `${currentPlayer.username}: ${currentPlayer.score}`;
-    current.style.color = "lightblue";
-    recent.appendChild(current);
+  const settingsBtn = document.getElementById("settingsBtn");
+  const settingsPopup = document.getElementById("settingsPopup");
+  const soundToggle = document.getElementById("soundToggle");
+  const musicToggle = document.getElementById("musicToggle");
+  const exitBtn = document.getElementById("exitBtn");
 
-    const blastBtn = document.querySelector(".blast-button");
+  let soundOn = true;
+  let musicOn = true;
+
+  if (settingsBtn && settingsPopup) {
+    settingsBtn.addEventListener("click", () => {
+      settingsPopup.classList.toggle("hidden");
+    });
+  }
+
+  if (soundToggle) {
+    soundToggle.addEventListener("click", () => {
+      soundOn = !soundOn;
+      soundToggle.src = soundOn ? "sound_on.png" : "sound_off.png";
+      console.log(`Sound is now ${soundOn ? "ON" : "OFF"}`);
+    });
+  }
+
+  if (musicToggle) {
+    musicToggle.addEventListener("click", () => {
+      musicOn = !musicOn;
+      musicToggle.classList.toggle("grayscale", !musicOn);
+      console.log(`Music is now ${musicOn ? "ON" : "OFF"}`);
+    });
+  }
+
+  if (exitBtn) {
+    exitBtn.addEventListener("click", () => {
+      console.log("Exiting game...");
+      window.close();
+    });
+  }
+
+  const blastBtn = document.querySelector(".blast-button");
+  if (blastBtn) {
     blastBtn.classList.add("hovering");
   }
 
-  else if (bodyId === "game") {
+  } else if (bodyId === "game") {
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
     canvas.width = canvas.offsetWidth;
@@ -111,68 +131,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const pauseModal = document.getElementById("pauseModal");
     const resumeBtn = document.getElementById("resume");
     const restartBtn = document.getElementById("restart");
+    const settingsModal = document.getElementById("settingsModal");
+    const openSettings = document.getElementById("openSettings");
+    const toggleSound = document.getElementById("toggleSound");
+    const toggleMusic = document.getElementById("toggleMusic");
+
+    let soundOn = true;
+    let musicOn = true;
+    let difficulty = localStorage.getItem("gameDifficulty") || "medium";
+    let baseSpeed;
+
+    switch (difficulty) {
+      case "easy": baseSpeed = 0.7; break;
+      case "hard": baseSpeed = 3.0; break;
+      default: baseSpeed = 1.2;
+    }
 
     const allWords = ["space", "blast", "rocket", "type", "alien", "orbit", "laser", "comet", "nova", "meteor", "galaxy", "asteroid", "ship", "planet", "blackhole"];
-    let activeWords = [];
-    let usedWords = [];
-    let bullets = [];
-    let interval;
-    let score = 0;
+    let activeWords = [], bullets = [], interval, score = 0;
 
-    let powerUpActive = null;
-    let powerUpTimer = null;
-    const powerUpIndicator = document.getElementById("power-up-indicator");
+    const ballImg = new Image();
+    ballImg.src = "balls.png";
 
-    // Power-up word spawn
     function spawnWord() {
-      const availableWords = allWords.filter(word => !usedWords.includes(word));
-      if (availableWords.length === 0) usedWords = [];
-
-      const word = availableWords[Math.floor(Math.random() * availableWords.length)];
-      usedWords.push(word);
-      if (usedWords.length > 15) usedWords.shift();
+      const word = allWords[Math.floor(Math.random() * allWords.length)];
       const y = Math.random() * (canvas.height - 40) + 20;
-      const speed = Math.random() * 1.2 + 1.2;
-      const color = ["#FFD700", "#00FFFF", "#FF69B4", "#ADFF2F", "#FF4500"][Math.floor(Math.random() * 5)];
-      const isPowerUp = Math.random() < 0.12;
-      const type = isPowerUp ? ["slow", "clear", "freeze", "double"][Math.floor(Math.random() * 4)] : null;
-
-      activeWords.push({ text: word, x: 0, y, speed, color, isPowerUp, type });
+      const speed = baseSpeed + Math.random();
+      const color = "#FFD700";
+      activeWords.push({ text: word, x: 0, y, speed, color });
     }
 
-    // Activate power-up
-    function activatePowerUp(type) {
-      clearTimeout(powerUpTimer);
-      powerUpActive = type;
-      powerUpIndicator.textContent = `POWER-UP: ${type.toUpperCase()}`;
-      powerUpIndicator.classList.add("active");
-
-      switch (type) {
-        case "slow":
-          speed /= 2;
-          break;
-        case "clear":
-          activeWords = [];
-          break;
-        case "freeze":
-          break;
-        case "double":
-          break;
-      }
-
-      powerUpTimer = setTimeout(() => deactivatePowerUp(), 5000);
-    }
-
-    function deactivatePowerUp() {
-      powerUpActive = null;
-      powerUpIndicator.textContent = "";
-      powerUpIndicator.classList.remove("active");
-    }
-
-    // Draw words and handle bullet interaction
     function drawWordsAndBullets() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       ctx.font = "bold 22px 'Courier New', monospace";
       activeWords.forEach(word => {
         ctx.fillStyle = word.color;
@@ -181,19 +171,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       bullets.forEach((bullet, i) => {
-        const img = new Image();
-        img.src = "balls.png";
-        ctx.drawImage(img, bullet.x, bullet.y - 10, 20, 20);
+        ctx.drawImage(ballImg, bullet.x, bullet.y - 10, 20, 20);
         bullet.x -= 15;
 
         activeWords.forEach((word, j) => {
           const wordWidth = ctx.measureText(word.text).width;
-          if (
-            bullet.x < word.x + wordWidth &&
-            bullet.x + 20 > word.x &&
-            bullet.y > word.y - 20 &&
-            bullet.y < word.y + 10
-          ) {
+          if (bullet.x < word.x + wordWidth && bullet.x + 20 > word.x &&
+              bullet.y > word.y - 20 && bullet.y < word.y + 10) {
             activeWords.splice(j, 1);
             bullets.splice(i, 1);
             score++;
@@ -211,12 +195,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Start game loop
-    function startGame() {
-      interval = setInterval(() => {
-        drawWordsAndBullets();
-        if (Math.random() < 0.025) spawnWord();
-      }, 30);
+    function shootBall(y) {
+      bullets.push({ x: canvas.width - 100, y });
     }
 
     wordInput.addEventListener("input", () => {
@@ -230,11 +210,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    function shootBall(y) {
-      bullets.push({ x: canvas.width - 100, y });
+    function startGame() {
+      interval = setInterval(() => {
+        drawWordsAndBullets();
+        if (Math.random() < 0.025) spawnWord();
+      }, 30);
     }
 
-    // Handle Game Over
     function showGameOver() {
       const modal = document.createElement("div");
       modal.classList.add("modal");
@@ -246,8 +228,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const msg = document.createElement("p");
       msg.textContent = "Game Over!";
       msg.style.color = "white";
-      msg.style.fontSize = "20px";
+      msg.style.fontSize = "24px";
       msg.style.textAlign = "center";
+
+      const scoreDisplay = document.createElement("p");
+      scoreDisplay.textContent = `Your Score: ${score}`;
+      scoreDisplay.style.color = "yellow";
+      scoreDisplay.style.fontSize = "20px";
+      scoreDisplay.style.textAlign = "center";
+      scoreDisplay.style.marginBottom = "20px";
 
       const playAgainBtn = document.createElement("button");
       playAgainBtn.textContent = "Play Again";
@@ -257,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
       menuBtn.textContent = "Menu";
       menuBtn.onclick = () => location.href = "homepage.html";
 
-      box.append(msg, playAgainBtn, menuBtn);
+      box.append(msg, scoreDisplay, playAgainBtn, menuBtn);
       modal.appendChild(box);
       document.body.appendChild(modal);
     }
@@ -274,6 +263,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     restartBtn.addEventListener("click", () => {
       location.reload();
+    });
+
+    openSettings.addEventListener("click", () => {
+      pauseModal.style.display = "none";
+      settingsModal.style.display = "flex";
+    });
+
+    toggleSound.addEventListener("click", () => {
+      soundOn = !soundOn;
+      toggleSound.textContent = `Sound: ${soundOn ? "On" : "Off"}`;
+    });
+
+    toggleMusic.addEventListener("click", () => {
+      musicOn = !musicOn;
+      toggleMusic.textContent = `Music: ${musicOn ? "On" : "Off"}`;
     });
 
     startGame();
