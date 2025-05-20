@@ -1,0 +1,23 @@
+<!-- music_player.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head><title>Music Player</title></head>
+<body style="margin:0; padding:0; overflow:hidden;">
+<audio id="bgm" src="bgm.mp3" loop autoplay></audio>
+<script>
+  const audio = document.getElementById("bgm");
+  audio.volume = 1.0;
+
+  // Receive messages to toggle music on/off
+  window.addEventListener("message", (e) => {
+    if (e.data === "toggleMusic") {
+      if (audio.paused) audio.play();
+      else audio.pause();
+    }
+    else if (typeof e.data === "object" && e.data.volume !== undefined) {
+      audio.volume = e.data.volume;
+    }
+  });
+</script>
+</body>
+</html>

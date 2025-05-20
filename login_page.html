@@ -10,15 +10,17 @@
   <img src="game_name2.png" alt="Game Name 2" class="game-title">
 
   <div class="form-box">
-    <input type="text" placeholder="Enter username">
-    <input type="password" placeholder="Enter password">
-    <a href="homepage.html">
-      <img src="login_button.png" alt="Login Button" class="login-button">
-    </a>
+    <input type="text" id="login-username" placeholder="Enter email">
+    <input type="password" id="login-password" placeholder="Enter password">
+    <img src="login_button.png" alt="Login Button" class="login-button" id="loginBtn" style="cursor: pointer;">
   </div>
 
-  <a href="register.html">
-    <img src="signup_button2.png" alt="Signup Button" class="signup-button">
-  </a>
+<button onclick="location.href='register.html'" class="signup-button" style="background: none; border: none; padding: 0;">
+  <img src="signup_button2.png" alt="Signup Button">
+</button>
+
+<script type="module" src="login.js" defer></script>
+<script src="music.js" defer></script>
+
 </body>
 </html>

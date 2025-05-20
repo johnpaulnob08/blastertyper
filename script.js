@@ -80,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const settingsPopup = document.getElementById("settingsPopup");
   const soundToggle = document.getElementById("soundToggle");
   const musicToggle = document.getElementById("musicToggle");
-  const exitBtn = document.getElementById("exitBtn");
 
   let soundOn = true;
   let musicOn = true;
@@ -107,19 +106,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  if (exitBtn) {
-    exitBtn.addEventListener("click", () => {
-      console.log("Exiting game...");
-      window.close();
-    });
-  }
-
   const blastBtn = document.querySelector(".blast-button");
   if (blastBtn) {
     blastBtn.classList.add("hovering");
   }
-
-  } else if (bodyId === "game") {
+  
+}   if (bodyId === "game") {
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
     canvas.width = canvas.offsetWidth;
@@ -135,6 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const openSettings = document.getElementById("openSettings");
     const toggleSound = document.getElementById("toggleSound");
     const toggleMusic = document.getElementById("toggleMusic");
+
+    const shootSound = document.getElementById("shootSound");
+    const gameOverSound = document.getElementById("gameOverSound");
 
     let soundOn = true;
     let musicOn = true;
@@ -172,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       bullets.forEach((bullet, i) => {
         ctx.drawImage(ballImg, bullet.x, bullet.y - 10, 20, 20);
-        bullet.x -= 15;
+        bullet.x -= 25;
 
         activeWords.forEach((word, j) => {
           const wordWidth = ctx.measureText(word.text).width;
@@ -197,6 +192,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function shootBall(y) {
       bullets.push({ x: canvas.width - 100, y });
+
+      if (soundOn && shootSound) {
+        shootSound.currentTime = 0;
+        shootSound.play();
+      }
     }
 
     wordInput.addEventListener("input", () => {
@@ -218,6 +218,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function showGameOver() {
+      if (soundOn && gameOverSound) {
+        gameOverSound.currentTime = 0;
+        gameOverSound.play();
+      }
+
       const modal = document.createElement("div");
       modal.classList.add("modal");
       modal.style.display = "flex";
@@ -249,6 +254,12 @@ document.addEventListener("DOMContentLoaded", () => {
       box.append(msg, scoreDisplay, playAgainBtn, menuBtn);
       modal.appendChild(box);
       document.body.appendChild(modal);
+
+      if (typeof window.saveScore === "function") {
+        window.saveScore(score);
+      } else {
+        console.warn("saveScore not available.");
+      }
     }
 
     pauseBtn.addEventListener("click", () => {

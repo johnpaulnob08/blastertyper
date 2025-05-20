@@ -13,6 +13,7 @@
 
   <div class="panel-container">
     <div class="panel left-panel">
+      <h2 class="light-title" id="greeting" style="font-family: 'Courier New', monospace;">Hello, Player</h2>
       <h2 class="light-title">Recent Games</h2>
       <div class="recent-placeholder"></div>
     </div>
@@ -25,10 +26,9 @@
         <button class="mode" data-mode="hard">HARD<br><span class="description">A true test of your typing skills!</span></button>
       </div>
 
-      <input type="text" id="playerName" placeholder="Enter your name">
-      <a href="game.html" id="startGameLink">
-        <img src="blast_button.png" class="blast-button">
-      </a>
+      <div class="start-container">
+        <button class="blast-button" id="startGameBtn">BLAST OFF</button>
+      </div>
     </div>
   </div>
 
@@ -37,10 +37,15 @@
     <div class="settings-popup hidden" id="settingsPopup">
       <img src="sound_on.png" class="popup-btn" id="soundToggle">
       <img src="music.png" class="popup-btn" id="musicToggle">
-      <img src="exit.png" class="popup-btn" id="exitBtn">
     </div>
   </div>
 
   <script src="script.js"></script>
+  <script type="module" src="homepage.js"></script>
+  <script src="music.js" defer></script>
+
+  <audio id="shootSound" src="shoot2.mp3" preload="auto"></audio>
+  <audio id="gameOverSound" src="shoot1.wav" preload="auto"></audio>
+
 </body>
 </html>

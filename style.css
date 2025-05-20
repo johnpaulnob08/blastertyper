@@ -77,7 +77,9 @@ img.hovering {
   width: 175px;
 }
 
-/* LOGIN / REGISTER PAGE */
+/* =========================
+   COMMON LOGIN / REGISTER STYLES
+========================= */
 #login-register {
   min-height: 100vh;
   background: linear-gradient(#1a1a2e, #16213e);
@@ -97,7 +99,7 @@ img.hovering {
 #login-register .game-title {
   display: block;
   position: relative;
-  top: -20px; /* adjust as needed */
+  top: -20px;
   margin: 0 auto;
   width: 100%;
   max-width: 800px;
@@ -106,21 +108,19 @@ img.hovering {
 
 #login-register .form-box {
   width: 400px;
-  height: 270px;
   margin-top: -50px;
-  background: rgba(118, 8, 186, 0.1); /* translucent white */
+  background: rgba(118, 8, 186, 0.1);
   padding: 30px;
   border-radius: 20px;
   text-align: center;
-  backdrop-filter: blur(10px); /* glass effect */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* subtle glow */
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 #login-register .form-box input {
   width: 80%;
   padding: 12px 20px;
-  margin: 20px auto 20px;
-  display: block;
+  margin: 20px auto;
   font-size: 16px;
   border: none;
   border-radius: 30px;
@@ -130,22 +130,41 @@ img.hovering {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-#login-register .form-box .login-button {
+
+/* =========================
+   LOGIN PAGE STYLES
+========================= */
+.login-button {
   cursor: pointer;
-  width: 160px;
+  width: 40%;
+  max-width: 160px;
+  height: auto;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 40px;
+  margin: 40px auto 0;
 }
 
-#login-register .signup-button {
+
+/* =========================
+   REGISTER PAGE STYLES
+========================= */
+.signup-button {
   display: block;
   margin: 30px auto 0;
-  width: 160px; /* adjust width as needed */
+  width: 40%;
+  max-width: 160px;
   height: auto;
   cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
 }
+
+.signup-button img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 
 /* HOME PAGE */
 
@@ -238,11 +257,11 @@ img.hovering {
 
 .blast-button {
   display: block;
-  margin: -10px auto 0;
+  margin: -10px auto 0; /* This centers the image horizontally */
   width: 350px;
   cursor: pointer;
-  margin-left: 10px;
 }
+
 
 #playerName {
   display: block;
@@ -304,6 +323,84 @@ img.hovering {
 
 .grayscale {
   filter: grayscale(100%);
+}
+
+.blast-button {
+  display: block;
+  width: 100%;
+  max-width: 350px;
+  margin: 30px auto 0;
+  padding: 20px 0;
+  background-color: #4b0082;
+  border: 3px solid #1a001f;
+  color: white;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 15px;
+  box-shadow: 0 0 15px #220033;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.blast-button:hover {
+  background-color: #5e00a3;
+  transform: scale(1.05);
+}
+
+/* Greeting styling */
+#greeting {
+  font-family: 'Courier New', monospace;
+  font-size: 1.5rem;
+  color: #f0e68c; /* a nice gold color */
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+/* Recent Games Title */
+.left-panel h2.light-title:nth-of-type(2) {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  text-align: center;
+  color: #ffd700;
+  font-weight: 600;
+}
+
+/* Container for recent scores */
+.recent-placeholder {
+  background: rgba(0,0,0,0.6);
+  padding: 1rem;
+  border-radius: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 0 10px #ffd700;
+}
+
+/* Individual score entries */
+.score-entry {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #ffd700;
+  border-radius: 6px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 0 8px #ffcc00;
+  transition: background-color 0.3s ease;
+  cursor: default;
+}
+
+.score-entry:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.score-entry strong {
+  color: #fffacd; /* light yellow for emphasis */
+}
+
+.score-entry small {
+  color: #ccc;
+  font-size: 0.8rem;
 }
 
 
@@ -476,6 +573,3 @@ img.hovering {
   #game {
     background-image: url('game_page.jpg');
   }
-
-  
-  
